@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  workflow_dispatch:
+    push:
+      branches:
+        - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        python_version: ["3.11-alpine"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up docker buildx
+        uses: docker/setup-buildx-docker@v2
+      - name: Login to ghcr
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          cache-from: type=registry,ref=ghcr.io/snwflake/python-poetry-alpine:${{ matrix.python_version }}
+          cache-to: type=inline
+          tags: |
+            ghcr.io/snwflake/python-poetry-alpine:${{ matrix.python_version }}
+          build-args: |
+            python_version=${{ matrix.python_version }}
