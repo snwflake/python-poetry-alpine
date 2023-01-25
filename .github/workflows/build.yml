@@ -33,6 +33,7 @@ jobs:
           cache-from: type=registry,ref=ghcr.io/snwflake/python-poetry-alpine:${{ matrix.python_version }}
           cache-to: type=inline
           tags: |
+            ghcr.io/snwflake/python-poetry-alpine:latest
             ghcr.io/snwflake/python-poetry-alpine:${{ matrix.python_version }}
           build-args: |
             python_version=${{ matrix.python_version }}
