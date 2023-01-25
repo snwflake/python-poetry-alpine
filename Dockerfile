@@ -1,6 +1,6 @@
 ARG PYTHON_VERSION=3.11
 
-FROM python:${PYTHON_VERSION}-alpine
+FROM --platform=linux/amd64 python:${PYTHON_VERSION}-alpine
 
 ENV POETRY_HOME="/opt/poetry/home" \
     POETRY_CACHE_DIR="/opt/poetry/cache" \
