@@ -1,6 +1,6 @@
-ARG python_version:3.11-alpine
+ARG PYTHON_VERSION:3.11
 
-FROM --platform=linux/amd64 python:${python_version}
+FROM python:${PYTHON_VERSION}-alpine
 
 ENV POETRY_HOME="/opt/poetry/home" \
     POETRY_CACHE_DIR="/opt/poetry/cache" \
